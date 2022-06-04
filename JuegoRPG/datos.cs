@@ -28,7 +28,7 @@ namespace JuegoRPG
             int nRaza = nRand.Next(0, 4);
             this.Nombre = _nombre;
             this.Raza = _raza[nRaza];
-            this.Apodo = _raza[nRaza];
+            this.Apodo = _apodo[nRaza];
             this.FechaDeNacimiento = new DateOnly(nRand.Next(1900, 2001), nRand.Next(1, 13), nRand.Next(1, 31)); //año, mes, dia
             this.Edad = obtenerEdad(FechaDeNacimiento);
             this.Salud = 100;
