@@ -9,14 +9,14 @@ namespace JuegoRPG
         private string Apodo="";
         private DateOnly FechaDeNacimiento;
         private int Edad;
-        private int Salud;
+        private double Salud;
 
         public string raza {get=>Raza; set=>Raza = value;}
         public string nombre {get=>Nombre; set=>Nombre = value;}
         public string apodo {get=>Apodo; set=>Apodo = value;}
         public DateOnly fechaDeNac {get=>FechaDeNacimiento; set=>FechaDeNacimiento = value;}
         public int edad {get=>Edad; set=>Edad = value;}
-        public int salud {get=>Salud; set=>Salud = value;}
+        public double salud {get=>Salud; set=>Salud = value;}
 
 
         public Datos(string _nombre){ //creamos un objeto con los datos del pj
@@ -29,7 +29,7 @@ namespace JuegoRPG
             this.Nombre = _nombre;
             this.Raza = _raza[nRaza];
             this.Apodo = _apodo[nRaza];
-            this.FechaDeNacimiento = new DateOnly(nRand.Next(1900, 2001), nRand.Next(1, 13), nRand.Next(1, 31)); //año, mes, dia
+            this.FechaDeNacimiento = new DateOnly(nRand.Next(1722, 2000), nRand.Next(1, 13), nRand.Next(1, 31)); //año, mes, dia
             this.Edad = obtenerEdad(FechaDeNacimiento);
             this.Salud = 100;
         }
