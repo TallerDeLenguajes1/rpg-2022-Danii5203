@@ -96,7 +96,7 @@ namespace JuegoRPG
                     funciones.mostrarInformacion(jugadores);
                 }
 
-            PAPA while (seguirJugando == 1);
+            } while (seguirJugando == 1);
 
             Console.WriteLine("\n\n=========================================================");
             Console.WriteLine("============= GAME OVER =============");

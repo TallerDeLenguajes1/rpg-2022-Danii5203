@@ -22,7 +22,7 @@ namespace JuegoRPG
             this.Destreza = nRand.Next(1, 6); //entre 1 y 5
             this.Fuerza = nRand.Next(1, 11);
             this.Nivel = nRand.Next(1, 11);
-            this.Armadura = nRand.Next(1, 11); //entre 1 y 10
+            this.Armadura = nRand.Next(1, 6); //entre 1 y 5
         }
     }
 }

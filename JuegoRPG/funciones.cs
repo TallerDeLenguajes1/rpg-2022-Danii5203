@@ -46,18 +46,26 @@ namespace JuegoRPG
             Random nRand = new Random();
 
             //VALORES DE ATAQUE
-            double PD = _jugadores[_pjAtaque].PjCaracteristicas.destreza * _jugadores[_pjAtaque].PjCaracteristicas.fuerza * _jugadores[_pjAtaque].PjCaracteristicas.nivel; //Poder de Disparo
-            double ED = nRand.Next(1, 101); //Efectividad de Ataque (valor aleatoria entre 1 y 100 [porcentual])
-            double VA = PD * ED;
+            double PD = ((_jugadores[_pjAtaque].PjCaracteristicas.destreza)/1.5) * _jugadores[_pjAtaque].PjCaracteristicas.fuerza * _jugadores[_pjAtaque].PjCaracteristicas.nivel; //Poder de Disparo
+            double ED = nRand.Next(1, 101); //Efectividad de Ataque (valor aleatoria entre 40 y 100 [porcentual])
+            double VA = (PD * ED)/100; //Obtenemos el daño real que realizara
 
             //VALORES DE DEFENSA
-            double PDEF = _jugadores[_pjDefensa].PjCaracteristicas.armadura * _jugadores[_pjDefensa].PjCaracteristicas.velocidad; //Poder de Defensa
-            double MDP = 50000; //Maximo daño Provocable
-            double DP = Math.Round((((VA * ED) - PDEF) / MDP) * 100); //Daño Provocado
+            double PDEF = _jugadores[_pjDefensa].PjCaracteristicas.destreza * _jugadores[_pjDefensa].PjCaracteristicas.armadura * _jugadores[_pjDefensa].PjCaracteristicas.nivel; //Poder de Defensa
+            double EDEF = nRand.Next(1, 101); //Efectividad de Defensa (valor aleatoria entre 1 y 50 [porcentual])
+            double VD = (PDEF * EDEF)/100; //Obtenemos la defensa que realizará
+            
+            //DAÑO PROVOCADO
+            double DP=0;
+            if(VD > VA){
+                DP = 0;
+            }else{
+                DP = Math.Round(VA - VD);
+            }
 
-            Console.WriteLine($"_Daño provocado por {_jugadores[_pjAtaque].PjDatos.apodo}: {DP} DP.");
+            Console.WriteLine($"_Daño provocado por {_jugadores[_pjAtaque].PjDatos.nombre} ({_jugadores[_pjAtaque].PjDatos.apodo}): {DP} DP.");
             _jugadores[_pjDefensa].PjDatos.salud -= DP;
-            Console.WriteLine($"_Salud de {_jugadores[_pjDefensa].PjDatos.apodo}: {_jugadores[_pjDefensa].PjDatos.salud} HP.");
+            Console.WriteLine($"_Salud de {_jugadores[_pjDefensa].PjDatos.nombre} ({_jugadores[_pjDefensa].PjDatos.apodo}): {_jugadores[_pjDefensa].PjDatos.salud} HP.");
         }
 
         public int ganadorKO(List<Personaje> _jugadores, int i){
