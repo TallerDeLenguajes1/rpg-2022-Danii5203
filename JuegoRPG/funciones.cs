@@ -68,12 +68,16 @@ namespace JuegoRPG
             Console.WriteLine($"_Salud de {_jugadores[_pjDefensa].PjDatos.nombre} ({_jugadores[_pjDefensa].PjDatos.apodo}): {_jugadores[_pjDefensa].PjDatos.salud} HP.");
         }
 
-        public int ganadorKO(List<Personaje> _jugadores, int i){
+        public int ganadorKO(List<Personaje> _jugadores, List<Personaje> _jugadoresQuePerdieron, int i){
             if(_jugadores[0].PjDatos.salud <= 0){ //si el PJ1 no tiene vida se lo debe sacar de la lista
+                if(_jugadores[0].PjDatos.salud<0){ _jugadores[0].PjDatos.salud = 0;} //para que no se vea salud en negativo
+                _jugadoresQuePerdieron.Add(_jugadores[0]); //guardamos a los jugadores que perdieron
                 _jugadores.RemoveAt(0);
                 return 5; //retornamos este valor para que salga del for
             }else{
                 if(_jugadores[1].PjDatos.salud <= 0){ //si el PJ2 no tiene vida se lo debe sacar de la lista
+                    if(_jugadores[1].PjDatos.salud<0){ _jugadores[1].PjDatos.salud = 0;}
+                    _jugadoresQuePerdieron.Add(_jugadores[1]); //guardamos a los jugadores que perdieron
                     _jugadores.RemoveAt(1);
                     return 5; //retornamos este valor para que salga del for
                 }
@@ -122,6 +126,33 @@ namespace JuegoRPG
                     _ganador[0].PjDatos.salud += 10;
                     Console.WriteLine($"-Se incremento 10 puntos de Salud.");
                     break;
+            }
+        }
+
+        public void guardarDatosDelGanador(List<Personaje> _ganadores, StreamWriter _writeStream){
+            string[] _participantes = new string[_ganadores.Count];
+            int i=0;
+            foreach (var participante in _ganadores)
+            {
+                _participantes[i] = participante.PjDatos.nombre;
+                i++;
+            }
+            string guardarParticipantes = String.Join(", ", _participantes.ToArray());
+            _writeStream.WriteLine($"\n***** Participantes: {guardarParticipantes} *****\n\n");
+            _writeStream.WriteLine("***** _GANADORES_ *****");
+            foreach (var jugador in _ganadores) //mostramos la info de los ganadores
+            {
+                if(jugador.PjDatos.partidasGanadas >= 1){ //en el caso de que los perdedores anteriores tengan mas de 1 partida ganada se los guardara en el texto
+                    string fechaActual = DateTime.Now.ToString("d/M/yyyy");
+                    string horaActual = DateTime.Now.ToString("hh:mm:ss");
+                        
+                    _writeStream.WriteLine($"_Ganador: {jugador.PjDatos.nombre} ({jugador.PjDatos.apodo})");
+                    _writeStream.WriteLine($"_Raza: {jugador.PjDatos.raza}");
+                    _writeStream.WriteLine($"_Salud: {jugador.PjDatos.salud}");
+                    _writeStream.WriteLine($"_Partidas ganadas: {jugador.PjDatos.partidasGanadas}");
+                    _writeStream.WriteLine($"_Fecha y Hora: {fechaActual} - {horaActual}");
+                    _writeStream.WriteLine("");
+                }
             }
         }
     }

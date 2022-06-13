@@ -10,6 +10,7 @@ namespace JuegoRPG
         private DateOnly FechaDeNacimiento;
         private int Edad;
         private double Salud;
+        private double PartidasGanadas;
 
         public string raza {get=>Raza; set=>Raza = value;}
         public string nombre {get=>Nombre; set=>Nombre = value;}
@@ -17,6 +18,7 @@ namespace JuegoRPG
         public DateOnly fechaDeNac {get=>FechaDeNacimiento; set=>FechaDeNacimiento = value;}
         public int edad {get=>Edad; set=>Edad = value;}
         public double salud {get=>Salud; set=>Salud = value;}
+        public double partidasGanadas {get=>PartidasGanadas; set=>PartidasGanadas = value;}
 
 
         public Datos(string _nombre){ //creamos un objeto con los datos del pj
@@ -32,6 +34,7 @@ namespace JuegoRPG
             this.FechaDeNacimiento = new DateOnly(nRand.Next(1722, 2000), nRand.Next(1, 13), nRand.Next(1, 31)); //año, mes, dia
             this.Edad = obtenerEdad(FechaDeNacimiento);
             this.Salud = 100;
+            this.PartidasGanadas = partidasGanadas;
         }
         public int obtenerEdad(DateOnly fechaDeNacimiento){
             int edad = DateTime.Now.Year - fechaDeNacimiento.Year;
