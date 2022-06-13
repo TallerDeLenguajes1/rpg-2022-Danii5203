@@ -125,6 +125,13 @@ namespace JuegoRPG
             funciones.guardarDatosDelGanador(jugadoresQuePerdieron, writeStream);
             writeStream.Close();
 
+            //LISTAR GANADORES
+            Console.WriteLine("\nDesea mostrar la lista de ganadores? (Si=1 | No=0)");
+            int verListaDeGanadores = Convert.ToInt32(Console.ReadLine());
+            if(verListaDeGanadores == 1){
+                funciones.mostrarListaDeGanadores();
+            }
+
             //FIN DEL JUEGO
             Console.WriteLine("\n\n=========================================================");
             Console.WriteLine("============= GAME OVER =============");

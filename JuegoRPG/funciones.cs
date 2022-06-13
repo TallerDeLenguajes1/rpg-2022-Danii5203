@@ -137,6 +137,17 @@ namespace JuegoRPG
                 }
             }
         }
+
+        public void mostrarListaDeGanadores(){
+            string leerArchivo = @"C:\juegoRPG\rpg-2022-Danii5203\JuegoRPG\ganadores.csv";
+
+            Console.WriteLine("********* GANADORES *********");
+            List<string> ganadores = File.ReadAllLines(leerArchivo).ToList();
+            foreach (var ganador in ganadores)
+            {
+                Console.WriteLine("-"+ganador);
+            }
+        }
     }
 }
 
