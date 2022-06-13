@@ -1,33 +1,29 @@
-============================== INICIO DEL JUEGO 12/6/2022 | 08:59:05 ==============================
+============================== INICIO DEL JUEGO 12/6/2022 | 09:04:07 ==============================
 ===================================================================================================
 
-***** Participantes: player 1, player 2, player 3, player 5, player 6, player 7, player 8, player 4, player 10, player 9 *****
+***** Participantes: PLAYER 1, PLAYER 3, PLAYER 4, PLAYER 2, PLAYER 6, PLAYER 7, PLAYER 5, PLAYER 8, PLAYER 10, PLAYER 9 *****
 
 
 ***** _GANADORES_ *****
-_Ganador: player 2 (SM)
-_Raza: Soul Master
-_Salud: 42
-_Partidas ganadas: 1
-_Fecha y Hora: 12/6/2022 - 09:00:27
-
-_Ganador: player 3 (SM)
-_Raza: Soul Master
+_Ganador: PLAYER 2 (BK)
+_Raza: Blade Knight
 _Salud: 0
-_Partidas ganadas: 1
-_Fecha y Hora: 12/6/2022 - 09:00:27
+_Partidas ganadas: 3
 
-_Ganador: player 4 (SM)
-_Raza: Soul Master
-_Salud: 19
-_Partidas ganadas: 5
-_Fecha y Hora: 12/6/2022 - 09:00:27
-
-_Ganador: player 9 (ELF)
+_Ganador: PLAYER 5 (ELF)
 _Raza: Muse Elf
-_Salud: 23
-_Partidas ganadas: 2
-_Fecha y Hora: 12/6/2022 - 09:00:27
+_Salud: 0
+_Partidas ganadas: 3
 
-============================== FIN DEL JUEGO 12/6/2022 | 09:00:27 ==============================
+_Ganador: PLAYER 8 (ELF)
+_Raza: Muse Elf
+_Salud: 19
+_Partidas ganadas: 1
+
+_Ganador: PLAYER 9 (SM)
+_Raza: Soul Master
+_Salud: 100
+_Partidas ganadas: 2
+
+============================== FIN DEL JUEGO 12/6/2022 | 09:05:18 ==============================
 ===================================================================================================

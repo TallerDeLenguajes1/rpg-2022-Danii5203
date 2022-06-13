@@ -150,7 +150,6 @@ namespace JuegoRPG
                     _writeStream.WriteLine($"_Raza: {jugador.PjDatos.raza}");
                     _writeStream.WriteLine($"_Salud: {jugador.PjDatos.salud}");
                     _writeStream.WriteLine($"_Partidas ganadas: {jugador.PjDatos.partidasGanadas}");
-                    _writeStream.WriteLine($"_Fecha y Hora: {fechaActual} - {horaActual}");
                     _writeStream.WriteLine("");
                 }
             }
