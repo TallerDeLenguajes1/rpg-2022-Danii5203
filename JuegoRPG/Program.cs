@@ -6,16 +6,11 @@ namespace JuegoRPG
         static void Main(string[] args){
             int seguirJugando = 0;
             string nombrePJ1, nombrePJ2;
-            int numPartidas = 0; 
 
             //DATOS DE LA PELEA PARA GUARDAR
-            string hrDeLaPeleaInicio = DateTime.Now.ToString("hh:mm:ss");
-            string fechaDeLaPeleaInicio = DateTime.Now.ToString("d/M/yyyy");
-            string fechaYHrInicio = fechaDeLaPeleaInicio +" | "+hrDeLaPeleaInicio;
-            string guardarArchivo = @"C:\juegoRPG\rpg-2022-Danii5203\JuegoRPG\ganadores.txt";
+            string guardarArchivo = @"C:\juegoRPG\rpg-2022-Danii5203\JuegoRPG\ganadores.csv";
             StreamWriter writeStream = new StreamWriter(guardarArchivo);
-            writeStream.WriteLine($"============================== INICIO DEL JUEGO {fechaYHrInicio} ==============================");
-            writeStream.WriteLine($"===================================================================================================");
+            writeStream.WriteLine("Nombre, Apodo, Raza, Partidas Ganadas");
 
             //LLAMAMOS AL ARCHIVO DE LAS FUNCIONES
             funciones funciones = new funciones();
@@ -128,11 +123,6 @@ namespace JuegoRPG
                 jugadoresQuePerdieron.Add(jugadores[0]);
             }
             funciones.guardarDatosDelGanador(jugadoresQuePerdieron, writeStream);
-            string hrDeLaPeleaFinal = DateTime.Now.ToString("hh:mm:ss");
-            string fechaDeLaPeleaFinal = DateTime.Now.ToString("d/M/yyyy");
-            string fechaYHrFinal = fechaDeLaPeleaFinal +" | "+hrDeLaPeleaFinal;
-            writeStream.WriteLine($"============================== FIN DEL JUEGO {fechaYHrFinal} ==============================");
-            writeStream.WriteLine($"===================================================================================================");
             writeStream.Close();
 
             //FIN DEL JUEGO
