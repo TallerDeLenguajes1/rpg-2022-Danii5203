@@ -1,2 +1,0 @@
-Nombre, Apodo, Raza, Partidas Ganadas
-PLAYER 1, MG, Magic Gladiator, 9
