@@ -2,7 +2,7 @@ using System;
 
 namespace JuegoRPG
 {
-    class Caracteristicas
+    class Caracteristicas //clase
     {
         private double Velocidad;
         private double Destreza;
@@ -16,8 +16,8 @@ namespace JuegoRPG
         public double nivel{get=>Nivel; set=>Nivel = value;}
         public double armadura{get=>Armadura; set=>Armadura = value;}
 
-        public Caracteristicas(){ //OBJETO CON LAS CARACTERISTICAS PARA EL PJ
-            Random nRand = new Random();
+        public Caracteristicas(){ //CONSTRUCTOR DE LA CLASE CARACTERISTICAS
+            Random nRand = new Random(); //la clase RANDOM()
             this.Velocidad = nRand.Next(1, 11);
             this.Destreza = nRand.Next(1, 6); //entre 1 y 5
             this.Fuerza = nRand.Next(1, 11);

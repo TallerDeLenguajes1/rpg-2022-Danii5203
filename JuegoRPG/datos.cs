@@ -21,7 +21,7 @@ namespace JuegoRPG
         public double partidasGanadas {get=>PartidasGanadas; set=>PartidasGanadas = value;}
 
 
-        public Datos(string _nombre){ //creamos un objeto con los datos del pj
+        public Datos(string _nombre){ //CONSTRUCTOR DE LA CLASE DATOS
             string[] _raza = new string[] {"Soul Master", "Blade Knight", "Muse Elf", "Magic Gladiator"};
             string[] _apodo = new string[] {"SM", "BK", "ELF", "MG"};
 
@@ -37,7 +37,7 @@ namespace JuegoRPG
             this.PartidasGanadas = partidasGanadas;
         }
         public int obtenerEdad(DateOnly fechaDeNacimiento){
-            int edad = DateTime.Now.Year - fechaDeNacimiento.Year;
+            int edad = DateTime.Now.Year - fechaDeNacimiento.Year; //restamos el año en el que estamos con el año de nacimiento
             if(fechaDeNacimiento.Month > DateTime.Now.Month){ //En caso de que el mes de nacimiento sea mayor que el que estamos 
                 edad -= 1; //restaremos 1 año de la edad
             }
