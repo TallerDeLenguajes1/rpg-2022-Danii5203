@@ -18,11 +18,11 @@ namespace JuegoRPG
 
         public Caracteristicas(){ //CONSTRUCTOR DE LA CLASE CARACTERISTICAS
             Random nRand = new Random(); //la clase RANDOM()
-            this.Velocidad = nRand.Next(1, 11);
-            this.Destreza = nRand.Next(1, 6); //entre 1 y 5
-            this.Fuerza = nRand.Next(1, 11);
-            this.Nivel = nRand.Next(1, 11);
-            this.Armadura = nRand.Next(1, 6); //entre 1 y 5
+            this.velocidad = nRand.Next(1, 11);
+            this.destreza = nRand.Next(1, 6); //entre 1 y 5
+            this.fuerza = nRand.Next(1, 11);
+            this.nivel = nRand.Next(1, 11);
+            this.armadura = nRand.Next(1, 6); //entre 1 y 5
         }
     }
 }

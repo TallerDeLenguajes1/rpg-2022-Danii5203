@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 namespace JuegoRPG
 {
     class Program
@@ -19,18 +24,12 @@ namespace JuegoRPG
             List<Personaje> jugadores = new List<Personaje>(); //inicialozamos la lista de tipo Personaje
             List<Personaje> jugadoresQuePerdieron = new List<Personaje>(); //inicializamos la lista para ir cargando los pj que van perdiendo y luego hacer la carga en el texto
 
-            //PEDIMOS EL NOMBRE DE LOS PJ
+            //CREAMOS LOS PRIMEROS 2 PJ
             Console.WriteLine("\n******************************************************");
             Console.WriteLine("***** CREAR PERSONAJES *****");
             Console.WriteLine("******************************************************\n");
-            //PJ 1
-            Console.WriteLine("_Ingrese el nombre del PJ 1: ");
-            nombrePJ1 = Console.ReadLine();
-            Personaje PJ1 = funciones.crearPJ(nombrePJ1);
-            //PJ 2
-            Console.WriteLine("\n_Ingrese el nombre del PJ 2: ");
-            nombrePJ2 = Console.ReadLine();
-            Personaje PJ2 = funciones.crearPJ(nombrePJ2);
+            Personaje PJ1 = funciones.crearPJ();
+            Personaje PJ2 = funciones.crearPJ();
 
             //AGG LOS JUGADORES A LA LISTA
             jugadores.Add(PJ1);
@@ -102,12 +101,22 @@ namespace JuegoRPG
                 //CONTROLAMOS QUE NO HAYA EMPATES
                 if(jugadores.Count == 1){ //Si no hay empate, preguntamos:
                     //DESEA SEGUIR JUGANDO?
-                    Console.WriteLine("Desea seguir jugando? (Si=1 | No=0)");
+                    Console.WriteLine("1- Jugar con un PJ nuevo.");
+                    Console.WriteLine("2- Jugar con un PJ antiguo aleatorio.");
+                    Console.WriteLine("0- Salir.");
                     seguirJugando = Convert.ToInt32(Console.ReadLine());
+
+                    if(seguirJugando == 2){
+                        Personaje PJNuevo = funciones.crearPJAntiguo();
+                        jugadores.Add(PJNuevo);
+                        funciones.mostrarInformacion(jugadores);
+                        if(PJNuevo == null){
+                            seguirJugando = 1;
+                            Console.WriteLine("No se encontraron PJs antiguos, cree uno nuevo.");
+                        }
+                    }
                     if(seguirJugando == 1){ //Si desea seguir jugando, cargamos un PJ nuevo
-                        Console.WriteLine("\n_Ingrese el nombre del PJ nuevo: ");
-                        string nombrePJNuevo = Console.ReadLine();
-                        Personaje PJNuevo = funciones.crearPJ(nombrePJNuevo);
+                        Personaje PJNuevo = funciones.crearPJ();
                         jugadores.Add(PJNuevo);
                         funciones.mostrarInformacion(jugadores);
                     }
@@ -116,7 +125,7 @@ namespace JuegoRPG
                     Console.WriteLine($"\n_Desempate entre: {jugadores[0].PjDatos.nombre} ({jugadores[0].PjDatos.apodo}) Salud > {jugadores[0].PjDatos.salud} | {jugadores[1].PjDatos.nombre} ({jugadores[1].PjDatos.apodo}) Salud > {jugadores[1].PjDatos.salud}");
                 }
 
-            } while (seguirJugando == 1); //CONTROL DE PARTIDA
+            } while (seguirJugando == 1 || seguirJugando == 2); //CONTROL DE PARTIDA
 
             //DATOS DE LA PELEA PARA GUARDAR
             if(jugadores.Count == 1){ //en el caso de que ya no quieramos jugar mas partidas guardamos el ultimo ganador para los controles que realizaremos despues
@@ -124,6 +133,9 @@ namespace JuegoRPG
             }
             funciones.guardarDatosDelGanador(jugadoresQuePerdieron, writeStream); //mandamos la lista con todos los jugadores para hacer el control de los ganadores
             writeStream.Close(); //cerramos el archivo que abrimos al principio
+
+            //GUARDAR JUGADORES EN EL ARCHIVO JSON
+            funciones.guardarDatosDeJugadoresJson(jugadoresQuePerdieron);
 
             //LISTAR GANADORES
             Console.WriteLine("\nDesea mostrar la lista de ganadores? (Si=1 | No=0)");

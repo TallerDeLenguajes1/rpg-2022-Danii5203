@@ -1,13 +1,16 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace JuegoRPG
 {
     class funciones
     {
-        public Personaje crearPJ(string _nombrePJ){ //CREAMOS PJ
-            Caracteristicas caracteristicasPJ = new Caracteristicas(); //intanciamos el obj para las caracteristicas
-            Datos datosPJ = new Datos(_nombrePJ); //instanciamos el obj para los datos
-            Personaje PJ = new Personaje(caracteristicasPJ, datosPJ); //instanciamos el obj y le mandamos los datos y caracteristicas para crear el PJ
+        public Personaje crearPJ(){ //CREAMOS PJ
+            Personaje PJ = new Personaje(); //instanciamos el obj y le mandamos los datos y caracteristicas para crear el PJ
             return PJ;
         }
         public void mostrarInformacion(List<Personaje> PJS){ //MOSTRAMOS LA INFO DE UN PJ
@@ -140,6 +143,25 @@ namespace JuegoRPG
             foreach (var ganador in ganadores) //recorremos la lista y lo mostramos
             {
                 Console.WriteLine("-"+ganador);
+            }
+        }
+
+        public void guardarDatosDeJugadoresJson(List<Personaje> _jugadores){
+            string pathJson = @"C:\juegoRPG\rpg-2022-Danii5203\JuegoRPG\jugadores.json";
+            var options = new JsonSerializerOptions { WriteIndented = true }; //indentar el json
+            string jugadoresJson = JsonSerializer.Serialize(_jugadores, options);
+            File.WriteAllText(pathJson, jugadoresJson); //Escibimos todo el string en el .json
+        }
+        public Personaje crearPJAntiguo(){
+            string jugadoresJson = File.ReadAllText("jugadores.json"); //Leemos todo el string del .json
+            var personajesDeserialize = JsonSerializer.Deserialize<List<Personaje>>(jugadoresJson);
+            if(personajesDeserialize != null){ //controlamos que no vengan los datos del json vacio
+                Random nRand = new Random();
+                int nPj = nRand.Next(0, personajesDeserialize.Count); //numero random del 0 al numero de pjs que hayamos guardado
+                personajesDeserialize[nPj].PjDatos.salud = 100; //le subimos la salud al maximo
+                return personajesDeserialize[nPj]; //retornamos un pj aleatorio antiguo
+            }else{
+                return null;
             }
         }
     }
