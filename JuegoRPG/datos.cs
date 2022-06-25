@@ -1,4 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace JuegoRPG
 {
@@ -22,15 +27,13 @@ namespace JuegoRPG
 
 
         public Datos(){ //CONSTRUCTOR DE LA CLASE DATOS
-            string[] _nombre = new string[] {"DANI", "LUCAS", "MARGARITA", "XD", "LOL", "FIFA"};
             string[] _raza = new string[] {"Soul Master", "Blade Knight", "Muse Elf", "Magic Gladiator"};
             string[] _apodo = new string[] {"SM", "BK", "ELF", "MG"};
 
             Random nRand = new Random();
             
             int nRandPJ = nRand.Next(0, 4);
-            int nRandNom = nRand.Next(1, 6);
-            this.nombre = _nombre[nRandPJ];
+            this.nombre = APIGeneraNomAleatorio();
             this.raza = _raza[nRandPJ];
             this.apodo = _apodo[nRandPJ];
             this.fechaDeNac = new DateTime(nRand.Next(1722, 2000), nRand.Next(1, 13), nRand.Next(1, 31)); //año, mes, dia
@@ -49,6 +52,35 @@ namespace JuegoRPG
                 }
             }
             return edad;
+        }
+        public string APIGeneraNomAleatorio(){ //API que nos devuelve el nombre e informacion de una persona random
+            var url = $"https://randomuser.me/api/?inc=name&noinfo"; //inc=name, solo devuelve datos del nombre, apellido
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+            string? nombreReturn;
+            try
+            {
+                using (WebResponse response = request.GetResponse())
+                {
+                    using (Stream strReader = response.GetResponseStream())
+                    {
+                        using (StreamReader objReader = new StreamReader(strReader))
+                        {
+                            string strNomCompleto = objReader.ReadToEnd();
+                            nombres? nombreCompleto = JsonSerializer.Deserialize<nombres>(strNomCompleto);
+                            nombreReturn = nombreCompleto.Results[0].Name.First; 
+                        }
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                
+                throw;
+            }
+            return nombreReturn;
         }
     }
 }
