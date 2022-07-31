@@ -10,19 +10,18 @@ namespace JuegoRPG
     {
         static void Main(string[] args){
             int seguirJugando = 0;
-            string nombrePJ1, nombrePJ2;
 
             //DATOS DE LA PELEA PARA GUARDAR
             string guardarArchivo = @"C:\juegoRPG\rpg-2022-Danii5203\JuegoRPG\ganadores.csv";
             StreamWriter writeStream = new StreamWriter(guardarArchivo); //abrimos un archivo con la clase StreamWriter para leer o escribir
-            writeStream.WriteLine("Nombre, Apodo, Raza, Partidas Ganadas"); //Escribimos en el archivo
+            writeStream.WriteLine("Nombre, Apodo, Raza, Partidas Ganadas"); //Escribimos
 
             //INSTANCIAMOS A LA CLASE DE LAS FUNCIONES
             funciones funciones = new funciones(); 
 
             //CREAMOS LA LISTA
             List<Personaje> jugadores = new List<Personaje>(); //inicialozamos la lista de tipo Personaje
-            List<Personaje> jugadoresQuePerdieron = new List<Personaje>(); //inicializamos la lista para ir cargando los pj que van perdiendo y luego hacer la carga en el texto
+            List<Personaje> jugadoresQuePerdieron = new List<Personaje>();
 
             //CREAMOS LOS PRIMEROS 2 PJ
             Console.WriteLine("\n******************************************************");
@@ -72,12 +71,10 @@ namespace JuegoRPG
                 //CONTROL DE SALUD
                 if(i < 5){ //Controla que no hayan muerto dentro de las 3 rondas
                     if(jugadores[0].PjDatos.salud < jugadores[1].PjDatos.salud){ //Si el PJ1 tiene menos vida que el PJ2
-                        if(jugadores[0].PjDatos.salud<0){ jugadores[0].PjDatos.salud = 0;} //Si el PJ1 tiene salud menor a 0 (es decir un numero negativo), le ponemos 0
                         jugadoresQuePerdieron.Add(jugadores[0]); //guardamos al PJ2 que perdio en la lista de los perdedores
                         jugadores.RemoveAt(0); //borramos al PJ2 de la lista jugadores
                     }else{ //Si el PJ2 tiene menos vida que el PJ1
                         if(jugadores[1].PjDatos.salud < jugadores[0].PjDatos.salud){
-                            if(jugadores[1].PjDatos.salud<0){ jugadores[1].PjDatos.salud = 0;}
                             jugadoresQuePerdieron.Add(jugadores[1]);
                             jugadores.RemoveAt(1);
                         }
@@ -108,11 +105,13 @@ namespace JuegoRPG
 
                     if(seguirJugando == 2){
                         Personaje PJNuevo = funciones.crearPJAntiguo();
-                        jugadores.Add(PJNuevo);
-                        funciones.mostrarInformacion(jugadores);
                         if(PJNuevo == null){
                             seguirJugando = 1;
                             Console.WriteLine("No se encontraron PJs antiguos, cree uno nuevo.");
+                        }else{
+                            jugadores.Add(PJNuevo);
+                            funciones.mostrarInformacion(jugadores);
+
                         }
                     }
                     if(seguirJugando == 1){ //Si desea seguir jugando, cargamos un PJ nuevo

@@ -17,9 +17,9 @@ namespace JuegoRPG
         public double armadura{get=>Armadura; set=>Armadura = value;}
 
         public Caracteristicas(){ //CONSTRUCTOR DE LA CLASE CARACTERISTICAS
-            Random nRand = new Random(); //la clase RANDOM()
+            Random nRand = new Random(); 
             this.velocidad = nRand.Next(1, 11);
-            this.destreza = nRand.Next(1, 6); //entre 1 y 5
+            this.destreza = nRand.Next(1, 6);
             this.fuerza = nRand.Next(1, 11);
             this.nivel = nRand.Next(1, 11);
             this.armadura = nRand.Next(1, 6); //entre 1 y 5

@@ -77,8 +77,11 @@ namespace JuegoRPG
             }
             catch (WebException ex)
             {
-                
-                throw;
+                //throw;
+                string[] nombres = new string[] {"PLAYER 1", "PLAYER 2", "PLAYER 3", "PLAYER 4"};
+
+                Random nRand = new Random();
+                nombreReturn = nombres[nRand.Next(0,4)];
             }
             return nombreReturn;
         }

@@ -10,9 +10,11 @@ namespace JuegoRPG
     class funciones
     {
         public Personaje crearPJ(){ //CREAMOS PJ
-            Personaje PJ = new Personaje(); //instanciamos el obj y le mandamos los datos y caracteristicas para crear el PJ
+            Personaje PJ = new Personaje(); //instanciamos el obj pj
             return PJ;
         }
+
+        //FUNCIONES PARA MOSTRAR
         public void mostrarInformacion(List<Personaje> PJS){ //MOSTRAMOS LA INFO DE UN PJ
             Console.WriteLine("\n******************************************************");
             Console.WriteLine("***** DATOS Y CARACTERISTICAS DE LOS PERSONAJES *****");
@@ -31,57 +33,66 @@ namespace JuegoRPG
             }
         }
         public void mostrarDatosPJ(Personaje _PJ){ //MOSTRAMOS LOS DATOS DEL PJ
-            Console.WriteLine($"Nombre: {_PJ.PjDatos.nombre} | Apodo: {_PJ.PjDatos.apodo} | Raza: {_PJ.PjDatos.raza} | Fecha de Nac.: {_PJ.PjDatos.fechaDeNac} | Edad: {_PJ.PjDatos.edad} años | Salud: {_PJ.PjDatos.salud} HP");
+            Console.WriteLine($"Nombre: {_PJ.PjDatos.nombre} | Apodo: {_PJ.PjDatos.apodo} | Raza: {_PJ.PjDatos.raza} | Fecha de Nac.: {_PJ.PjDatos.fechaDeNac.ToString("D")} | Edad: {_PJ.PjDatos.edad} años | Salud: {_PJ.PjDatos.salud} HP");
         }
         public void mostrarCaracteristicasPJ(Personaje _PJ){ //MOSTRAMOS LAS CARACTERISTICAS DEL PJ
             Console.WriteLine($"Velocidad: {Math.Round(_PJ.PjCaracteristicas.velocidad, 2)} | Destreza: {Math.Round(_PJ.PjCaracteristicas.destreza, 2)} | Fuerza: {Math.Round(_PJ.PjCaracteristicas.fuerza, 2)} | Nivel: {Math.Round(_PJ.PjCaracteristicas.nivel, 2)} | Armadura: {Math.Round(_PJ.PjCaracteristicas.armadura, 2)}");
         }
+
+        //FUNCIOON DE COMBATE
         public void mecanicaDeCombate(List<Personaje> _jugadores, int _pjAtaque, int _pjDefensa){ //MECANICA DE COMBATE
             Random nRand = new Random();
 
             //VALORES DE ATAQUE
             double PD = ((_jugadores[_pjAtaque].PjCaracteristicas.destreza)/1.5) * _jugadores[_pjAtaque].PjCaracteristicas.fuerza * _jugadores[_pjAtaque].PjCaracteristicas.nivel; //Poder de Disparo
-            double ED = nRand.Next(1, 101); //Efectividad de Ataque (valor aleatoria entre 40 y 100 [porcentual])
+            double ED = nRand.Next(1, 101); //Efectividad de Disparo (valor aleatoria entre 1 y 100 [porcentual])
             double VA = (PD * ED)/100; //Obtenemos el daño real que realizara
 
             //VALORES DE DEFENSA
             double PDEF = _jugadores[_pjDefensa].PjCaracteristicas.destreza * _jugadores[_pjDefensa].PjCaracteristicas.armadura * _jugadores[_pjDefensa].PjCaracteristicas.nivel; //Poder de Defensa
-            double EDEF = nRand.Next(1, 101); //Efectividad de Defensa (valor aleatoria entre 1 y 50 [porcentual])
+            double EDEF = nRand.Next(1, 101); //Efectividad de Defensa (valor aleatoria entre 1 y 100 [porcentual])
             double VD = (PDEF * EDEF)/100; //Obtenemos la defensa que realizará
             
             //DAÑO PROVOCADO
             double DP=0;
-            if(VD > VA){ //SI LA DEFENSA FUE MEJOR QUE EL ATAQUE
+            if(VD > VA){
                 DP = 0; //NO LE SACA NADA DE VIDA
             }else{ //SINO
-                DP = Math.Round(VA - VD); //LE RESTAMOS LOS PUNTOS DE VIDA AL PJ QUE DEFIENDE
+                DP = Math.Round(VA - VD);
             }
+
 
             //MOSTRAMOS LOS DATOS LUEGO DE UNA RONDA
             Console.WriteLine($"_Daño provocado por {_jugadores[_pjAtaque].PjDatos.nombre} ({_jugadores[_pjAtaque].PjDatos.apodo}): {DP} DP.");
+
             _jugadores[_pjDefensa].PjDatos.salud -= DP;
+            if(_jugadores[_pjDefensa].PjDatos.salud < 0){
+                _jugadores[_pjDefensa].PjDatos.salud = 0;
+            }
+
             Console.WriteLine($"_Salud de {_jugadores[_pjDefensa].PjDatos.nombre} ({_jugadores[_pjDefensa].PjDatos.apodo}): {_jugadores[_pjDefensa].PjDatos.salud} HP.");
         }
 
-        public int ganadorKO(List<Personaje> _jugadores, List<Personaje> _jugadoresQuePerdieron, int i){ //FUNCION PARA MOSTRAR EL GANADOR EN EL CASO DE QUE NO SE TERMINEN LAS 3 RONDAS
+        public int ganadorKO(List<Personaje> _jugadores, List<Personaje> _jugadoresQuePerdieron, int i){
             if(_jugadores[0].PjDatos.salud <= 0){ //si el PJ1 no tiene vida se lo debe sacar de la lista
-                if(_jugadores[0].PjDatos.salud<0){ _jugadores[0].PjDatos.salud = 0;} //para que no se vea salud en negativo
                 _jugadoresQuePerdieron.Add(_jugadores[0]); //guardamos a los jugadores que perdieron
                 _jugadores.RemoveAt(0);
                 return 5; //retornamos este valor para que salga del for
             }else{
                 if(_jugadores[1].PjDatos.salud <= 0){ //si el PJ2 no tiene vida se lo debe sacar de la lista
-                    if(_jugadores[1].PjDatos.salud<0){ _jugadores[1].PjDatos.salud = 0;}
                     _jugadoresQuePerdieron.Add(_jugadores[1]); //guardamos a los jugadores que perdieron
                     _jugadores.RemoveAt(1); //removemos al pj
                     return 5; //retornamos este valor para que salga del for
                 }
             }
-            return i; //sino entra en ninguna condicion devolvera el valor actual de i para que siga controlando
+            return i; 
         }
+
+        //BONUS
         public void aumentoCaracteristicasDelGanador(List<Personaje> _ganador){ //AUMENTO DE CARACTERISTICAS PARA EL GANADOR
             Random nRand = new Random();
             int caractRandom = nRand.Next(1, 7); //valor entre 1 y 6
+            
             int cincoAdiez = nRand.Next(5, 11); //valor entre 5 y 10
             int dosAseis = nRand.Next(2, 7); //valor entre 2 y 6
 
@@ -125,6 +136,7 @@ namespace JuegoRPG
             }
         }
 
+        //GUARDAR Y MOSTRAR DATOS DE LOS GANADORES
         public void guardarDatosDelGanador(List<Personaje> _ganadores, StreamWriter _writeStream){ //guardamos los datos de los ganadores en un texto
             //la clase StreamWriter sirve para abrir un archivo y escribir sobre el mismo
             foreach (var jugador in _ganadores) //recorremos la lista con los ganadores
@@ -146,6 +158,7 @@ namespace JuegoRPG
             }
         }
 
+        //JSON
         public void guardarDatosDeJugadoresJson(List<Personaje> _jugadores){
             string pathJson = @"C:\juegoRPG\rpg-2022-Danii5203\JuegoRPG\jugadores.json";
             var options = new JsonSerializerOptions { WriteIndented = true }; //indentar el json
@@ -153,7 +166,7 @@ namespace JuegoRPG
             File.WriteAllText(pathJson, jugadoresJson); //Escibimos todo el string en el .json
         }
         public Personaje crearPJAntiguo(){
-            string jugadoresJson = File.ReadAllText("jugadores.json"); //Leemos todo el string del .json
+            string jugadoresJson = File.ReadAllText("jugadores.json"); //Leemos
             var personajesDeserialize = JsonSerializer.Deserialize<List<Personaje>>(jugadoresJson);
             if(personajesDeserialize != null){ //controlamos que no vengan los datos del json vacio
                 Random nRand = new Random();
